@@ -1,5 +1,11 @@
 <script>
+    import Coursecard from "./Coursecard.svelte";
     import NewCourseForm from "./NewCourseForm.svelte";
+
+    const fetchCourses = (async () => {
+        const response = await fetch("http://localhost:8000/courses");
+        return await response.json();
+    })();
 
     var modalNewCourse = false;
 </script>
@@ -16,6 +22,18 @@
     <button type="button" class="btn btn-danger btn-lg">Delete</button>
 </div>
 <NewCourseForm />
+
+<div class="d-flex flex-row mb-3">
+    {#await fetchCourses}
+        <p>...waiting</p>
+    {:then courses}
+        {#each courses.courses as course}
+            <Coursecard header={course.course_id} title={course.description} />
+        {/each}
+    {:catch error}
+        <p>An error occurred!</p>
+    {/await}
+</div>
 
 <style>
     .flex-container {

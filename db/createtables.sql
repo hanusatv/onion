@@ -3,7 +3,7 @@
     CREATE TABLE semesters (
         semester_id NOT NULL PRIMARY KEY,
         code text NOT NULL,
-        Description text NOT NULL);
+        description text NOT NULL);
 
 
     CREATE TABLE courses (
